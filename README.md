@@ -1,1 +1,1 @@
-# payuni_for_magento
+# PAYUNi for magento
