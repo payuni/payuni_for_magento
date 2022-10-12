@@ -124,6 +124,11 @@ Abstract class PaymentUpp extends Action
                     $message .= " | 待繳金額：" . $encryptInfo['TradeAmt'];
                     $message .= " | 繳費截止時間：" . $encryptInfo['ExpireDate'];
                     break;
+                case '6': // ICP 愛金卡
+                    $message .= " | 訂單編號：" . $encryptInfo['MerTradeNo'];
+                    $message .= " | 愛金卡交易序號：" . $encryptInfo['ICPNo'];
+                    $message .= " | 付款日期時間：" . $encryptInfo['ICPPayDT'];
+                    break;
             }
         }
         else {
