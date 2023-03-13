@@ -18,12 +18,21 @@ class Redirect extends PaymentUpp
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
         $base_url = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+
+        //items
+        $itemStr = '';
+        $items = $this->_order->getItemsCollection()->getItems();
+        foreach ($items as $item) {
+            $itemStr .= $item->getname() . ' * ' . (float)$item->getQtyOrdered() * 1 . ';';
+        }
+
         // 整理要傳給upp的資料陣列
         $encryptInfo = [
             'MerID'      => $this->MerchantID,
             'MerTradeNo' => $this->_order["increment_id"],
             'TradeAmt'   => round($this->_order["grand_total"]),
             'ExpireDate' => date('Y-m-d', strtotime("+7 days")),
+            'ProdDesc'   => $itemStr,
             'ReturnURL'  => $base_url . 'payuni/payment/payunireturn',
             "NotifyURL"  => $base_url . 'payuni/payment/notify', //幕後
             'Timestamp'  => time()
