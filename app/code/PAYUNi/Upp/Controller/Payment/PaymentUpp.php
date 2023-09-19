@@ -105,7 +105,8 @@ Abstract class PaymentUpp extends Action
      */
     protected function SetNotice(Array $encryptInfo, String $mini = '1') {
         $trdStatus = ['待付款','已付款','付款失敗','付款取消'];
-        $authType  = [1=>'一次', 2=>'分期', 3=>'紅利', 7=>'銀聯'];
+        $authType  = [0=>'無', 1=>'一次', 2=>'分期', 3=>'紅利', 4=>'Apple Pay', 5=>'Google Pay', 6=>'Samsung Pay', 7=>'銀聯'];
+        $encryptInfo['AuthType'] = (array_key_exists($encryptInfo['AuthType'], $authType)) ? $encryptInfo['AuthType'] : 0 ;
         $store     = ['SEVEN' => '統一超商 (7-11)'];
         if ($mini == '2') {
             $message  = "授權狀態：" . $encryptInfo['Message'];
